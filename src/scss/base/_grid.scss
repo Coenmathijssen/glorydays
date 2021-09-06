@@ -1,0 +1,13 @@
+.container {
+  max-width: 50rem;
+  width: calc(100% - 4em);
+  margin: 0 auto;
+
+  @include b620 {
+    width: calc(100% - 8.5em);
+  }
+}
+
+.row {
+  width: 100%;
+}

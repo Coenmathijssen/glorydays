@@ -23,6 +23,9 @@ export default new Vuex.Store({
     setDeviceId: (state, payload) => {
       state.deviceId = payload
     },
+    setPlaylists: (state, payload) => {
+      state.playlists = payload
+    },
   },
   // async
   actions: {},

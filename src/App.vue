@@ -14,7 +14,6 @@ import spotifyAuth from '@/js/spotifyAuth/spotify_auth'
 export default {
   name: 'App',
   mounted() {
-    console.log(this.$store.getters.getAccessToken)
     if (this.$store.getters.getAccessToken) return
 
     // Set access token

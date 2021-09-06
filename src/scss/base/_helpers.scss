@@ -1,0 +1,84 @@
+/************************** FLEX *********************/
+.d-flex {
+  display: flex;
+}
+
+.d-flex-start {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.d-flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.d-flex-around {
+  display: flex;
+  justify-content: space-around;
+}
+
+.d-flex-center {
+  display: flex;
+  justify-content: center;
+}
+
+.d-flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.d-flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.d-flex-column-start {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.d-flex-column-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.d-flex-column-between {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.d-flex-column-end {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.align-items-start {
+  align-items: flex-start;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.align-items-end {
+  align-items: flex-end;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+/********** POSITIONING *********/
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
