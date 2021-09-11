@@ -108,6 +108,7 @@ export default {
   },
   watch: {
     '$store.state.accessToken': function handler() {
+      console.log('joejoe ', this.$store.state.accessToken)
       this.getPersonalPlaylists()
       this.getEasyPlaylists()
       this.getNostalgicPlaylists()

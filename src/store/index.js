@@ -58,5 +58,14 @@ export default new Vuex.Store({
   // async
   actions: {},
   modules: {},
-  getters: {}
+  getters: {
+    getAccessToken: state => state.accessToken,
+    getHeaders: state => state.headers,
+    getPlayerInstance: state => state.playerInstance,
+    getPlayer: state => state.player,
+    getDeviceId: state => state.deviceId,
+    getPlaylists: state => state.playlists,
+    getLikedSongs: state => state.likedSongs,
+    getSearched: state => state.searched
+  }
 })

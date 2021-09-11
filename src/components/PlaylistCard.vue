@@ -1,7 +1,7 @@
 <template>
   <router-link :to="{ name: 'Playlist', params: { playlistId: id, title, madeBy: addedBy, totalTracks, firstTrack }}">
     <article class="relative playlist-card" :id="id">
-      <div class="text-18 bold ff-mulish absolute ta-left">
+      <div class="text-18 bold ff-mulish absolute">
         {{ title }}
       </div>
       <button class="play js-play">

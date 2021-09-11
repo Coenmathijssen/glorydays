@@ -6,7 +6,7 @@
           <div class="avatar-container">
             <img src="~@/assets/svg/avatars/avatar_rounded.svg" alt="Avatar small">
           </div>
-          <div class="ta-left relative">
+          <div class="relative">
             <h1 class="text-40 bold relative">
               <div class="icon-container absolute">
                 <img src="~@/assets/svg/moon.svg" alt="Moon">

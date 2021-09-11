@@ -13,8 +13,6 @@
         :playlistId="playlistId"
       />
     </div>
-    <PlayBar
-    />
   </div>
 </template>
 
@@ -22,7 +20,6 @@
 import OverviewPlaylist from '@/components/OverviewPlaylist.vue'
 import SearchBar from '@/components/SearchBar.vue'
 import PlaylistGrid from '@/components/PlaylistGrid.vue'
-import PlayBar from '@/components/PlayBar.vue'
 
 export default {
   name: 'Playlist',
@@ -36,8 +33,7 @@ export default {
   components: {
     OverviewPlaylist,
     SearchBar,
-    PlaylistGrid,
-    PlayBar
+    PlaylistGrid
   }
 }
 </script>

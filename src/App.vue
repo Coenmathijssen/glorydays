@@ -5,15 +5,20 @@
       <router-link to="/about">About</router-link>
     </div>
     <router-view/>
+    <PlayBar/>
   </div>
 </template>
 
 <script>
 // import axios from 'axios'
 import spotifyAuth from '@/js/spotifyAuth/spotify_auth'
+import PlayBar from '@/components/PlayBar.vue'
 
 export default {
   name: 'App',
+  components: {
+    PlayBar
+  },
   mounted() {
     if (this.$store.getters.getAccessToken) return
 
@@ -62,16 +67,14 @@ export default {
 
 <style lang="scss">
 @import '~@/scss/variables';
+@import '~@/scss/base/mixins/rem';
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  background-color: $main-bg;
-  color: #2c3e50;
   min-height: 100vh;
+  padding-bottom: rem(50px);
   overflow: hidden;
+  background-color: $main-bg;
+  font-family: 'Avenir';
 }
 
 #nav {

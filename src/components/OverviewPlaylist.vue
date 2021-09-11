@@ -7,7 +7,7 @@
             <div class="back-button-container">
               <BackButton url="/" />
             </div>
-            <div class="ta-left relative">
+            <div class="relative">
               <h1 class="text-32 bold ">
                 {{ title }}
               </h1>

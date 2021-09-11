@@ -1,6 +1,6 @@
 <template>
   <section class="playlist">
-    <div v-if="playlist" class="header ta-left"> 
+    <div v-if="playlist" class="header"> 
       <div class="d-flex align-items-center row">
         <div class="col col__first">
           <div class="text-14 bold tt-uppercase">
@@ -105,9 +105,13 @@ export default {
   },
   watch: {
     '$store.state.isPlaying': function handler() {
-      console.log('running')
-      const activeButton = document.querySelector('.js-play.playing')
-      this.trigggerPlayButton(activeButton)
+      const activeButton = document.querySelector('.js-play.active')
+
+      if (this.isPlaying === false) {
+        activeButton.classList.remove('playing')
+      } else {
+        activeButton.classList.add('playing')
+      }
     }
   },
   created () {
@@ -139,17 +143,21 @@ export default {
     trigggerPlayButton (el, type) {
       if (type === 'new') {
         const activeButton = document.querySelector('.js-play.playing')
-        if (activeButton) activeButton.classList.remove('playing')
+        if (activeButton) {
+          activeButton.classList.remove('active')
+          activeButton.classList.remove('playing')
+        }
+        el.classList.add('active')
         el.classList.add('playing')
+        this.$store.commit('setIsPlaying', true)
       } else {
-        // this.player.togglePlay()
-        // if (el.classList.contains('playing')) {
-        //   this.$store.commit('setIsPlaying', false)
-        //   el.classList.remove('playing')
-        // } else {
-        //   this.$store.commit('setIsPlaying', true)
-        //   el.classList.add('playing')
-        // }
+        if (el.classList.contains('playing')) {
+          this.$store.commit('setIsPlaying', false)
+          el.classList.remove('playing')
+        } else {
+          this.$store.commit('setIsPlaying', true)
+          el.classList.add('playing')
+        }
       }
     }
   }
