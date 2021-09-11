@@ -4,7 +4,7 @@
       <div class="container">
         <div class="d-flex-center">
           <div class="avatar-container">
-            <img src="~@/assets/svg/avatar_rounded.svg" alt="Avatar small">
+            <img src="~@/assets/svg/avatars/avatar_rounded.svg" alt="Avatar small">
           </div>
           <div class="ta-left relative">
             <h1 class="text-40 bold relative">
@@ -69,6 +69,11 @@ export default {
     padding-bottom: rem(4px);
   }
 
+  .avatar-container {
+    border-radius: 50%;
+    border: solid 2px $dark-blue;
+  }
+
   .icon-container {
     top: rem(-16px);
     right: rem(-82px);
@@ -83,11 +88,6 @@ export default {
   }
 }
 
-.avatar-container {
-  border-radius: 50%;
-  border: solid 2px $dark-blue;
-}
-
 .section-bg {
   width: 100%;
 
@@ -95,7 +95,6 @@ export default {
     position: relative;
     width: 100%;
     top: -4px;
-    z-index: -1;
   }
 }
 

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
+      <router-link to="/">Home</router-link>
       <router-link to="/about">About</router-link>
     </div>
     <router-view/>
@@ -9,6 +9,7 @@
 </template>
 
 <script>
+// import axios from 'axios'
 import spotifyAuth from '@/js/spotifyAuth/spotify_auth'
 
 export default {
@@ -22,7 +23,6 @@ export default {
         this.playbackInit()
       }
     })
-
   },
   methods: {
     playbackInit () {
@@ -30,36 +30,48 @@ export default {
       let externalScript = document.createElement('script')
       externalScript.setAttribute('src', 'https://sdk.scdn.co/spotify-player.js')
       document.head.appendChild(externalScript)
-      window.onSpotifyWebPlaybackSDKReady = () => {
-        const playerInit = new window.Spotify.Player({
-          name: 'Glory Days Player',
-          getOAuthToken: cb => { cb(this.$store.getters.getAccessToken); }
+
+      // Called when the Spotify Web Playback SDK is ready to use
+      window.onSpotifyWebPlaybackSDKReady = () => {  
+        // Define the Spotify Connect device, getOAuthToken has an actual token
+        // hardcoded for the sake of simplicity
+        const player = new window.Spotify.Player({
+          name: 'Glory Days',
+          getOAuthToken: (callback) => {
+            callback(
+              this.$store.getters.getAccessToken
+            )
+          },
+          volume: 0.3
         })
-  
-        // Ready
-        playerInit.connect().then(success => {
-          if (success) {
-            playerInit.addListener('ready', ({ device_id }) => {
-              console.log('ready with device id: ', device_id)
-              this.$store.commit('setDeviceId', device_id)
-              this.$store.deviceI
-            })
-          }
+
+        player.connect()
+
+        player.addListener("ready", ({ device_id }) => {
+          this.$store.commit('setDeviceId', device_id)
         })
+
+        this.$store.commit('setPlayer', player)
+        console.log("playing?")
       }
-    }
+    },
   }
 }
 </script>
 
 
 <style lang="scss">
+@import '~@/scss/variables';
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  background-color: $main-bg;
   color: #2c3e50;
+  min-height: 100vh;
+  overflow: hidden;
 }
 
 #nav {

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import defaultParams from './defaultParams'
 import store from '@/store/index'
+import router from '@/router/index'
 
 /* eslint-disable no-unused-vars */
 
@@ -18,10 +19,20 @@ const getUserData = {
               externalUrl: playlist.external_urls.spotify,
               albumCover: playlist.images[0].url,
               title: playlist.name,
-              tracksUrl: playlist.tracks.id
+              tracksUrl: playlist.tracks.href,
+              madeBy: {
+                name: playlist.owner.display_name,
+                url: playlist.owner.external_urls.spotify
+              },
+              totalTracks: playlist.tracks.total
             }
           })
           return playlistsClean
+        })
+        .catch(err => {
+          if (err.response?.status === 401) {
+            router.push('login')
+          }
         })
     },
     getSongs (params = defaultParams) {
@@ -51,7 +62,7 @@ const getUserData = {
           return cleanedData
         })
         .catch(err => {
-          console.log('error: ', err)
+          console.log('err', err.response)
         })
     },
   }

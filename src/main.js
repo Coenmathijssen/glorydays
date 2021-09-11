@@ -5,11 +5,6 @@ import router from './router'
 import store from './store/index'
 import './scss/main.scss'
 
-setTimeout(() => {
-  console.log(App)
-  
-}, 4000);
-
 Vue.config.productionTip = false
 
 const VueInstance = new Vue({

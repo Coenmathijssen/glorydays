@@ -6,16 +6,6 @@
       :message="overview.message"
     />
     <Playlists/>
-    <h1>Log in to Spotify using Authorization Code flow</h1>
-      <a href="https://spotify-auth-handler.herokuapp.com/login" class="btn btn-primary">Log in with Spotify</a><br>
-    <!-- <div v-if="songs">
-      <p
-        v-for="(song, index) in songs"
-        :key="`song-${index}`"
-      >
-        {{song.name}}
-      </p>
-    </div> -->
   </div>
 </template>
 

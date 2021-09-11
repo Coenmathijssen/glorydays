@@ -7,8 +7,15 @@ export default new Vuex.Store({
   state: {
     accessToken: null,
     headers: null,
+    player: null,
+    playerInstance: null,
     deviceId: null,
-    playlists: [],
+    currentPlayingSong: null,
+    isPlaying: false,
+    isPaused: false,
+    personalPlaylists: [],
+    easyPlaylists: [],
+    nostalgicPlaylists: [],
     likedSongs: [],
     searched: []
   },
@@ -20,21 +27,36 @@ export default new Vuex.Store({
     setHeaders: (state, payload) => {
       state.headers = payload
     },
+    setPlayerInstance: (state, payload) => {
+      state.playerInstance = payload
+    },
+    setPlayer: (state, payload) => {
+      state.player = payload
+    },
     setDeviceId: (state, payload) => {
       state.deviceId = payload
     },
-    setPlaylists: (state, payload) => {
-      state.playlists = payload
+    setCurrentPlayingSong: (state, payload) => {
+      state.currentPlayingSong = payload
     },
+    setIsPlaying: (state, payload) => {
+      state.isPlaying = payload
+    },
+    setIsPaused: (state, payload) => {
+      state.isPaused = payload
+    },
+    setPersonalPlaylists: (state, payload) => {
+      state.personalPlaylists = payload
+    },
+    setEasyPlaylists: (state, payload) => {
+      state.easyPlaylists.push(payload)
+    },
+    setNostalgicPlaylists: (state, payload) => {
+      state.nostalgicPlaylists.push(payload)
+    }
   },
   // async
   actions: {},
   modules: {},
-  getters: {
-    getAccessToken: state => state.accessToken,
-    getHeaders: state => state.headers,
-    getPlaylists: state => state.playlists,
-    getLikedSongs: state => state.likedSongs,
-    getSearched: state => state.searched
-  }
+  getters: {}
 })

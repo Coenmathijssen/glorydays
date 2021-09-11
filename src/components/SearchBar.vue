@@ -1,5 +1,5 @@
 <template>
-  <div class="search-container d-flex">
+  <div class="search-container shadow d-flex">
     <div class="relative search-wrapper">
       <input v-model="searchQuery" placeholder="Zoek op lijst, artiest of nummer" type="text" class="text-16 ff-mulish search">
       <div class="search-button-container d-flex-center align-items-center js-search">
@@ -41,7 +41,6 @@ export default {
   padding: rem(9px) rem(11px);
   background-color: $white;
   border-radius: 8px;
-  box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.1);
 
   .text-16 {
     color: rgba(0,0,0,0.8);
