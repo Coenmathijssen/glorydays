@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Overview from '../views/Overview.vue'
-import About from '../views/About.vue'
-import Login from '../views/LoginSpotify.vue'
-import Playlist from '../views/Playlist.vue'
+import Overview from '@/views/Overview.vue'
+import About from '@/views/About.vue'
+import Login from '@/views/LoginSpotify.vue'
+import Playlist from '@/views/Playlist.vue'
 
 Vue.use(VueRouter)
 
