@@ -1,7 +1,7 @@
 <template>
   <section class="login d-flex-center align-items-center">
     <div class="container">
-      <div class="inner">
+      <div class="inner d-flex-column-center">
         <img src="~@/assets/spotify_logo.png" alt="Spotify logo">
         <h1 class="text-32 bold ta-center">Login to Spotify to connect your account with Glory Days</h1>
         <a href="https://spotify-auth-handler.herokuapp.com/login" class="btn btn-primary ta-center text-16 tt-uppercase">Log in with Spotify</a><br>

@@ -70,8 +70,10 @@ export default {
   }
 
   .avatar-container {
-    border-radius: 50%;
-    border: solid 2px $dark-blue;
+    img {
+      border-radius: 50%;
+      border: solid 2px $dark-blue;
+    }
   }
 
   .icon-container {

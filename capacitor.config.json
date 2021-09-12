@@ -1,0 +1,6 @@
+{
+  "appId": "com.glorydays.cmd.app",
+  "appName": "glorydays",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}
