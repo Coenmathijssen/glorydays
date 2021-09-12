@@ -51,7 +51,7 @@
 import BackButton from '@/components/buttons/BackButton.vue'
 
 export default {
-  name: 'OveriewHeader',
+  name: 'OverviewPlaylist',
   props: {
     title: String,
     madeBy: Object,
