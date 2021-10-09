@@ -17,7 +17,8 @@ export default new Vuex.Store({
     easyPlaylists: [],
     nostalgicPlaylists: [],
     likedSongs: [],
-    searched: []
+    searchActive: false,
+    searched: null
   },
   // synchronous
   mutations: {
@@ -53,7 +54,13 @@ export default new Vuex.Store({
     },
     setNostalgicPlaylists: (state, payload) => {
       state.nostalgicPlaylists.push(payload)
-    }
+    },
+    setSearchActive: (state, payload) => {
+      state.searchActive = payload
+    },
+    setSearched: (state, payload) => {
+      state.searched = payload
+    },
   },
   // async
   actions: {},

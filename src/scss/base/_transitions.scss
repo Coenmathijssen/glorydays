@@ -1,0 +1,22 @@
+.bar-fade-enter-active, .bar-fade-leave-active {
+  transition: all .3s ease;
+}
+
+.bar-fade-enter, .bar-fade-leave, .bar-fade-leave-to {
+  transform: translate(-50%, 50px);
+  opacity: 0;
+}
+
+.list-fade-enter-active, .list-fade-leave-active {
+  transition: all .3s ease;
+}
+
+.list-fade-enter-to, .list-fade-leave {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.list-fade-enter, .list-fade-leave-to {
+  transform: translateY(100px);
+  opacity: 0;
+}

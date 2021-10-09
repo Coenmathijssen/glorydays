@@ -5,20 +5,32 @@
       :name="overview.name"
       :message="overview.message"
     />
-    <Playlists/>
+    
+    <transition name="list-fade">
+      <Playlists v-if="!searchActive"/>
+    </transition>
+
+    <transition name="list-fade">
+      <SearchResults v-if="searchActive"/>
+    </transition>
   </div>
 </template>
 
 <script>
-// import getUserData from '@/spotify/getUserData'
+import { mapState } from 'vuex'
 import OverviewHeader from '@/components/OverviewHeader.vue'
 import Playlists from '@/components/Playlists.vue'
+import SearchResults from '@/components/SearchResults.vue'
 
 export default {
   name: 'Home',
+  computed: {
+    ...mapState(['searchActive'])
+  },
   components: {
     OverviewHeader,
-    Playlists
+    Playlists,
+    SearchResults
   },
   data () {
     return {

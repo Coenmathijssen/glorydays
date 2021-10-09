@@ -9,20 +9,31 @@
       <div class="search-bar-container">
         <SearchBar/>
       </div>
-      <PlaylistGrid 
-        :playlistId="playlistId"
-      />
+      <transition name="list-fade">
+        <PlaylistGrid 
+          v-if="!searchActive"
+          :playlistId="playlistId"
+        />
+      </transition>
+      <transition name="list-fade">
+        <SearchResults v-if="searchActive"/>
+      </transition>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import OverviewPlaylist from '@/components/OverviewPlaylist.vue'
 import SearchBar from '@/components/SearchBar.vue'
 import PlaylistGrid from '@/components/PlaylistGrid.vue'
+import SearchResults from '@/components/SearchResults.vue'
 
 export default {
   name: 'Playlist',
+  computed: {
+    ...mapState(['searchActive'])
+  },
   props: {
     playlistId: String,
     title: String,
@@ -33,7 +44,8 @@ export default {
   components: {
     OverviewPlaylist,
     SearchBar,
-    PlaylistGrid
+    PlaylistGrid,
+    SearchResults
   }
 }
 </script>

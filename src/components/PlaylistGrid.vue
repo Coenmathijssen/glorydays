@@ -164,7 +164,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '~@/scss/variables';
 @import '~@/scss/base/breakpoints';
 @import '~@/scss/base/mixins/rem';
@@ -212,18 +212,18 @@ export default {
       padding-right: rem(12px);
     }
   }
+}
 
-  .icon-container {
-    position: relative;
-    padding-left: rem(4px);
-    padding-right: rem(16px);
-    height: calc(40px - 4px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: solid 2px rgba(37, 51, 58, 0.2);
-    border-radius: 50px 0 0 50px;
-  }
+.icon-container {
+  position: relative;
+  padding-left: rem(4px);
+  padding-right: rem(16px);
+  height: calc(40px - 4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: solid 2px rgba(37, 51, 58, 0.2);
+  border-radius: 50px 0 0 50px;
 
   .button-add {
     height: 40px;
@@ -281,9 +281,9 @@ export default {
       }
     }
   }
+}
 
-  .lighter {
-    opacity: 0.4;
-  }
+.lighter {
+  opacity: 0.4;
 }
 </style>

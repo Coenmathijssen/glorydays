@@ -26,7 +26,7 @@
     <div class="section-bg relative">
       <img src="~@/assets/svg/section_header_1.svg" alt="header shape">
       <div class="absolute search-bar-container">
-        <SearchBar/>
+        <SearchBar @handleSearchQuery="handleSearchQuery"/>
       </div>
     </div>
   </section>
@@ -44,6 +44,11 @@ export default {
   },
   components: {
     SearchBar
+  },
+  methods: {
+    handleSearchQuery (query) {
+      this.$emit('searchQuery', query)
+    }
   }
 }
 </script>

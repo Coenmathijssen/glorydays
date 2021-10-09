@@ -30,12 +30,10 @@ const getPlaylist = {
           console.log('error ', err.response)
         })
     },
-    getPlaylistTracks (playlistId, params = defaultParams) {
-      const id = '3MBZgyO4XhzZiruJh9DV3g'
-  
+    getPlaylistTracks (playlistId, params = defaultParams) {  
       return axios.get(
         `https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
-            params: defaultParams,
+            params,
             headers: store.getters.getHeaders,
         }).then(res => {
           const playlist = res.data

@@ -189,13 +189,4 @@ export default {
     }
   }
 }
-
-.bar-fade-enter-active, .bar-fade-leave-active {
-  transition: all .3s ease;
-}
-
-.bar-fade-enter, .bar-fade-leave-to {
-  transform: translate(-50%, 50px);
-  opacity: 0;
-}
 </style>

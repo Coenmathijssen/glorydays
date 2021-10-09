@@ -1,64 +1,53 @@
-import spotifyAuth from '@/js/spotifyAuth/spotify_auth'
 import axios from 'axios'
+import store from '@/store/index'
 
-/* eslint-disable no-unused-vars */
-
-const defaultParams = {
-  limit: 50,
-  offset: 0
-}
-
-const getUserData = {
+const search = {
   methods: {
-    getPlaylists (params = defaultParams) {
-      return spotifyAuth.then(headers => {
-        return axios.get(
-          'https://api.spotify.com/v1/me/playlists', {
-              params: defaultParams,
-              headers: headers,
-          }).then(res => {
-            const playlistsClean = res.data.items.map(playlist => {
+    searchData (query) {  
+      console.log(query)
+      return axios.get(
+        `https://api.spotify.com/v1/search?q=${query}&type=track,artist`, {
+            headers: store.getters.getHeaders,
+        }).then(res => {
+          // console.log(res.data.tracks.items)
+          return {
+            songs: res.data.tracks.items.map(song => {
               return {
-                id: playlist.id,
-                externalUrl: playlist.external_urls.spotify,
-                albumCover: playlist.images[0].url,
-                title: playlist.name,
-                tracksUrl: playlist.tracks.id
+                id: song.id,
+                name: song.name,
+                albumCover: {
+                  small: song.album.images.length > 2 ? song.album.images[2].url : null,
+                  medium:  song.album.images.length > 1 ? song.album.images[1].url : null,
+                  large: song.album.images.length > 0 ? song.album.images[0].url : null
+                },
+                artists: song.artists.map(artist => {
+                  return {
+                    id: artist.id,
+                    name: artist.name,
+                    url: artist.url,
+                  }
+                }),
+                duration: song.duration_ms
+              }
+            }),
+            artists: res.data.artists.items.map(artist => {
+              return {
+                id: artist.id,
+                name: artist.name,
+                albumCover: {
+                  small: artist.images.length > 2 ? artist.images[2].url : null,
+                  medium:  artist.images.length > 1 ? artist.images[1].url : null,
+                  large: artist.images.length > 0 ? artist.images[0].url : null
+                }
               }
             })
-            return playlistsClean
-          })
-      })
-    },
-    getSongs (params = defaultParams) {
-      return spotifyAuth.then(headers => {
-        return axios.get(
-          'https://api.spotify.com/v1/me/tracks', {
-              params: defaultParams,
-              headers: headers,
-          }).then(res => {
-            const cleanedData = res.data.items.map(item => {
-              return {
-                  id: item.track.id,
-                  name: item.track.name,
-                  artists: item.track.artists.map(artist => {
-                    return {
-                      id: artist.id,
-                      name: artist.name,
-                      externalUrl: artist.external_urls.spotify
-                    }
-                  }),
-                  albumCover: {
-                    small: item.track.album.images.length > 0 ? item.track.album.images[1].url : null,
-                    large: item.track.album.images.length > 0 ? item.track.album.images[0].url : null
-                  }
-              };
-           })
-            return cleanedData
-          })
-      })
-    },
+          }
+        })
+        .catch(err => {
+          console.log('error ', err.response)
+        })
+    }
   }
 }
 
-export default getUserData
+export default search
