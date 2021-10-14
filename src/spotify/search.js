@@ -27,6 +27,7 @@ const search = {
                     url: artist.url,
                   }
                 }),
+                url: song.external_urls.spotify,
                 duration: song.duration_ms
               }
             }),

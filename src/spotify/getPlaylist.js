@@ -43,8 +43,13 @@ const getPlaylist = {
               return {
                 id: song.track.id,
                 addedBy: song.added_by.id,
-                url: song.added_by.external_urls.spotify,
+                url: song.track.external_urls.spotify,
                 name: song.track.name,
+                albumCover: {
+                  small: song.track.album.images.length > 2 ? song.track.album.images[2].url : null,
+                  medium:  song.track.album.images.length > 1 ? song.track.album.images[1].url : null,
+                  large: song.track.album.images.length > 0 ? song.track.album.images[0].url : null
+                },
                 artists: song.track.artists.map(artist => {
                   return {
                     id: artist.id,
@@ -56,8 +61,6 @@ const getPlaylist = {
               }
             })
           }
-          // console.log(playlistClean)
-          // return playlistClean
         })
         .catch(err => {
           console.log('error ', err.response)
