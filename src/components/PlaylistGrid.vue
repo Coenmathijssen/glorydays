@@ -170,7 +170,7 @@ export default {
 @import '~@/scss/base/mixins/rem';
 
 .playlist {
-  padding: rem(60px) 0;
+  padding: rem(60px) 0 rem(160px);
 
   .text-14 {
     display: block;

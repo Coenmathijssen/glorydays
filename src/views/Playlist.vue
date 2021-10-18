@@ -19,7 +19,6 @@
         <SearchResults v-if="searchActive"/>
       </transition>
     </div>
-    <AddMemory/>
   </div>
 </template>
 
@@ -29,7 +28,6 @@ import OverviewPlaylist from '@/components/OverviewPlaylist.vue'
 import SearchBar from '@/components/SearchBar.vue'
 import PlaylistGrid from '@/components/PlaylistGrid.vue'
 import SearchResults from '@/components/SearchResults.vue'
-import AddMemory from '@/components/AddMemory.vue'
 
 export default {
   name: 'Playlist',
@@ -47,8 +45,7 @@ export default {
     OverviewPlaylist,
     SearchBar,
     PlaylistGrid,
-    SearchResults,
-    AddMemory
+    SearchResults
   }
 }
 </script>

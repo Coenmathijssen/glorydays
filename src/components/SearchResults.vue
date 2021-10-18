@@ -67,7 +67,7 @@
           class="more-button-container">
           <OrangeButton 
             @click.native="loadMoreSongs"
-            :name="buttonText"
+            :name="buttonTextSongs"
           />
         </div>
       </section>
@@ -97,7 +97,7 @@
           class="more-button-container">
           <OrangeButton 
             @click.native="loadMoreArtists"
-            :name="buttonText"
+            :name="buttonTextArtists"
           />
         </div>
       </section>
@@ -122,7 +122,8 @@ export default {
   },
   data () {
     return {
-      buttonText: 'Meer nummers inladen',
+      buttonTextSongs: 'Meer nummers inladen',
+      buttonTextArtists: 'Meer artiesten inladen',
       maxSongs: 5,
       maxArtists: 5
     }
@@ -201,7 +202,7 @@ section:last-of-type {
 }
 
 .search-results {
-  padding: rem(30) 0 rem(60px);
+  padding: rem(30) 0 rem(160px);
 
   .text-14 {
     display: block;

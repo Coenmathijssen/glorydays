@@ -8,7 +8,7 @@
           </div>
           <div class="relative">
             <h1 class="text-40 bold relative">
-              <div class="icon-container absolute">
+              <div class="moon-container absolute">
                 <img src="~@/assets/svg/moon.svg" alt="Moon">
               </div>
               <template v-if="daytime === 'evening'">
@@ -81,7 +81,7 @@ export default {
     }
   }
 
-  .icon-container {
+  .moon-container {
     top: rem(-16px);
     right: rem(-82px);
   }

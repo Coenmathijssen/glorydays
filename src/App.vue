@@ -6,6 +6,8 @@
     </div> -->
     <router-view/>
     <PlayBar/>
+    <AddMemory/>
+    <MenuBar/>
   </div>
 </template>
 
@@ -13,11 +15,15 @@
 // import axios from 'axios'
 import spotifyAuth from '@/js/spotifyAuth/spotify_auth'
 import PlayBar from '@/components/PlayBar.vue'
+import AddMemory from '@/components/AddMemory.vue'
+import MenuBar from '@/components/MenuBar.vue'
 
 export default {
   name: 'App',
   components: {
-    PlayBar
+    PlayBar,
+    AddMemory,
+    MenuBar
   },
   mounted() {
     if (this.$store.getters.getAccessToken) return

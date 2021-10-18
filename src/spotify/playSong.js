@@ -13,10 +13,10 @@ const playSong = {
           fetch(
             `https://api.spotify.com/v1/me/player/play?device_id=${store.state.deviceId}`,
             {
-              method: "PUT",
+              method: 'PUT',
               body: JSON.stringify({ uris: [context_uri] }),
               headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
                 Authorization: `Bearer ${access_token}`,
               }
             }
