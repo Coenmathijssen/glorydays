@@ -157,7 +157,7 @@ export default {
   data () {
     return {
       playing: true,
-      playbarLarge: true
+      playbarLarge: false
     }
   },
   computed: {
@@ -399,9 +399,12 @@ export default {
       padding: rem(24px) rem(100px);
       background-color: $orange;
       border-radius: 40px 40px 0 0;
+      
+      svg {
+        padding-right: rem(30px);
+      }
 
       span {
-        padding-left: rem(30px);
         color: $white;
       }
     }

@@ -70,9 +70,6 @@
 import { mapState } from 'vuex'
 import getUserData from '@/spotify/getUserData'
 import getPlaylist from '@/spotify/getPlaylist'
-
-// console.log(getPlaylist.methods.playlist())
-
 import Swiper from 'swiper'
 import 'swiper/swiper-bundle.css'
 import PlaylistCard from '@/components/PlaylistCard'
