@@ -121,6 +121,7 @@ export default {
     },  
     close () {
       this.$store.commit('setAddMemory', false)
+      this.memory.bits = []
     },
     addText () {
       this.memory.bits.push({ 
@@ -171,7 +172,6 @@ export default {
       addDoc(collection(db, 'memories'), this.memory).then(() => {
         console.log('memory saved')
         this.close()
-        this.memory.bits = []
       })
       .catch(err => {
         console.log('error saving memory: ', err)

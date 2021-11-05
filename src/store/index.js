@@ -19,7 +19,8 @@ export default new Vuex.Store({
     likedSongs: [],
     searchActive: false,
     searched: null,
-    addMemory: false
+    addMemory: false,
+    memories: null
   },
   // synchronous
   mutations: {
@@ -64,6 +65,9 @@ export default new Vuex.Store({
     },
     setAddMemory: (state, payload) => {
       state.addMemory = payload
+    },
+    setMemories: (state, payload) => {
+      state.memories = payload
     }
   },
   // async

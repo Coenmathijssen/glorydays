@@ -5,6 +5,7 @@ import Overview from '@/views/Overview.vue'
 import About from '@/views/About.vue'
 import Login from '@/views/LoginSpotify.vue'
 import Playlist from '@/views/Playlist.vue'
+import Memories from '@/views/Memories.vue'
 
 Vue.use(VueRouter)
 
@@ -28,6 +29,12 @@ const routes = [
     path: '/playlist',
     name: 'Playlist',
     component: Playlist,
+    props: true
+  },
+  {
+    path: '/memories',
+    name: 'Memories',
+    component: Memories,
     props: true
   }
 ]
