@@ -23,7 +23,7 @@
           </div>
         </div>
       </div>
-      <div v-for="(song, index) in playlist" :key="`row-${index}`" class="d-flex align-items-center row">
+      <div v-for="(song, index) in songs" :key="`row-${index}`" class="d-flex align-items-center row">
         <div class="col col__first">
           <span class="text-14 bold">
             {{song.name }}
@@ -47,26 +47,50 @@
           </span>
         </div>
         <div class="col col__fourth">
-          <template v-if="index % 4 == 0 || index % 10== 0">
-            <div class="d-flex align-items-center avatar-container">
-              <img src="~@/assets/svg/avatars/male_white/happy.svg" alt="Happy">
-              <span class="text-14">
-                Gelukkig
-              </span>
-            </div>
-          </template>
-          <template v-else-if="index % 6 == 0">
-             <div class="d-flex align-items-center avatar-container">
-              <img src="~@/assets/svg/avatars/male_white/bored.svg" alt="Happy">
-              <span class="text-14">
-                Verveeld
-              </span>
-            </div>
-          </template>
-          <template v-else>
+          <template v-if="song.emotion === 'none'">
             <span class="text-14 lighter">
               Niet gemeten
             </span>
+          </template>
+          <template v-else-if="song.emotion >= 0 && song.emotion <= 0.2">
+            <div class="d-flex align-items-center avatar-container">
+              <img src="~@/assets/svg/avatars/emotions/0.svg" alt="Horrible">
+              <span class="text-14">
+                Veschrikkelijk
+              </span>
+            </div>
+          </template>
+          <template v-else-if="song.emotion >= 0.3 && song.emotion <= 0.5">
+            <div class="d-flex align-items-center avatar-container">
+              <img src="~@/assets/svg/avatars/emotions/1.svg" alt="Bad">
+              <span class="text-14">
+                Matig
+              </span>
+            </div>
+          </template>
+          <template v-else-if="song.emotion >= 0.6 && song.emotion <= 0.7">
+            <div class="d-flex align-items-center avatar-container">
+              <img src="~@/assets/svg/avatars/emotions/2.svg" alt="Neutral">
+              <span class="text-14">
+                Neutraal
+              </span>
+            </div>
+          </template>
+          <template v-else-if="song.emotion >= 0.8 && song.emotion <= 0.9">
+            <div class="d-flex align-items-center avatar-container">
+              <img src="~@/assets/svg/avatars/emotions/3.svg" alt="Happy">
+              <span class="text-14">
+                Blij
+              </span>
+            </div>
+          </template>
+          <template v-else-if="song.emotion > 0.9">
+            <div class="d-flex align-items-center avatar-container">
+              <img src="~@/assets/svg/avatars/emotions/4.svg" alt="Amazing">
+              <span class="text-14">
+                Geweldig
+              </span>
+            </div>
           </template>
         </div>
         <div class="col col__fifth">
@@ -87,6 +111,8 @@
 
 <script>
 import { mapState } from 'vuex'
+import db from '@/js/firebase/firebase_init.js'
+import { collection, getDocs } from 'firebase/firestore/lite'
 import getPlaylist from '@/spotify/getPlaylist'
 import playSong from '@/spotify/playSong'
 
@@ -97,7 +123,8 @@ export default {
   },
   data () {
     return {
-      playlist: null
+      playlist: null,
+      songs: null
     }
   },
   computed: {
@@ -121,7 +148,7 @@ export default {
     getCurrentPlaylist () {
       getPlaylist.methods.getPlaylistTracks(this.playlistId).then(playlist => {
         this.playlist = playlist.songs
-        console.log(this.playlist)
+        this.getEmotions()
       })
     },
     convertToTime(milliseconds) {
@@ -130,7 +157,6 @@ export default {
       return minutes + ':' + (seconds < 10 ? '0' : '') + seconds
     },
     playSong (el, song) {
-      console.log(el)
       if (song !== this.currentPlayingSong) {
         playSong.methods.start(song.id)  
         this.$store.commit('setCurrentPlayingSong', song)
@@ -159,6 +185,31 @@ export default {
           el.classList.add('playing')
         }
       }
+    },
+    async getEmotions () {
+      const querySnapshot = await getDocs(collection(db, 'emotions'))
+      const data = []
+      querySnapshot.forEach((doc) => {
+        data.push(doc.data())
+      })
+      this.emotions = data
+      
+      this.compareEmotions()
+    },
+    compareEmotions () {
+      this.playlist.forEach(song => {
+        this.emotions.forEach(emotion => {
+          if (song.found) return
+          
+          if (song.id === emotion.Track_ID) {
+            song.emotion = Math.round(emotion.RNN * 10) / 10
+            song.found = true
+          } else {
+            song.emotion = 'none'
+          }
+        })
+      })
+      this.songs = this.playlist
     }
   }
 }

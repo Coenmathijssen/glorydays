@@ -21,9 +21,14 @@ export default {
 @import '~@/scss/base/mixins/rem';
 
 .login {
+  position: fixed;
+  top: 0;
+  left: 0;
   min-height: 100vh;
+  width: 100%;
   background-color: #131114;
   color: $white;
+  z-index: 1;
 
   .inner {
     padding: 0 calc(64px);

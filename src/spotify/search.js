@@ -4,7 +4,6 @@ import store from '@/store/index'
 const search = {
   methods: {
     searchData (query) {  
-      console.log(query)
       return axios.get(
         `https://api.spotify.com/v1/search?q=${query}&type=track,artist`, {
             headers: store.getters.getHeaders,

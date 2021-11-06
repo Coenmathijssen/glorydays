@@ -52,6 +52,7 @@ nav {
   border: solid 4px $almost-white;
   border-radius: 20px 20px 0 0;
   background-color: $white;
+  z-index: 9;
 
   a {
     padding: rem(28px) rem(8px);

@@ -1,7 +1,7 @@
 <template>
   <div class="search-results">
     <div class="container"> 
-      <section v-if="searched.songs.length > 0" >
+      <section v-if="songs && songs.length > 0" >
         <h1 class="text-28">
           Gevonden nummers
         </h1>
@@ -15,13 +15,18 @@
               Titel
             </div>
           </div>
-          <div class="col col__third">
+          <div class="col col__third col__third__top">
             <div class="text-14 bold tt-uppercase">
               Duur
             </div>
           </div>
+          <div class="col col__fourth">
+            <div class="text-14 bold tt-uppercase">
+              Emotie
+            </div>
+          </div>
         </div>
-        <div v-for="(song, index) in searched.songs" :key="`song-${index}`">
+        <div v-for="(song, index) in songs" :key="`song-${index}`">
           <div v-if="index < maxSongs" class="d-flex-between align-items-center row">
             <div class="d-flex align-items-center">
               <div class="col col__first">
@@ -47,6 +52,53 @@
                 <span class="text-14">
                   {{ convertToTime(song.duration) }}
                 </span>
+              </div>
+              <div class="col col__fourth">
+                <template v-if="song.emotion === 'none'">
+                  <span class="text-14 lighter">
+                    Niet gemeten
+                  </span>
+                </template>
+                <template v-else-if="song.emotion >= 0 && song.emotion <= 0.2">
+                  <div class="d-flex align-items-center avatar-container">
+                    <img src="~@/assets/svg/avatars/emotions/0.svg" alt="Horrible">
+                    <span class="text-14">
+                      Veschrikkelijk
+                    </span>
+                  </div>
+                </template>
+                <template v-else-if="song.emotion >= 0.3 && song.emotion <= 0.5">
+                  <div class="d-flex align-items-center avatar-container">
+                    <img src="~@/assets/svg/avatars/emotions/1.svg" alt="Bad">
+                    <span class="text-14">
+                      Matig
+                    </span>
+                  </div>
+                </template>
+                <template v-else-if="song.emotion >= 0.6 && song.emotion <= 0.7">
+                  <div class="d-flex align-items-center avatar-container">
+                    <img src="~@/assets/svg/avatars/emotions/2.svg" alt="Neutral">
+                    <span class="text-14">
+                      Neutraal
+                    </span>
+                  </div>
+                </template>
+                <template v-else-if="song.emotion >= 0.8 && song.emotion <= 0.9">
+                  <div class="d-flex align-items-center avatar-container">
+                    <img src="~@/assets/svg/avatars/emotions/3.svg" alt="Happy">
+                    <span class="text-14">
+                      Blij
+                    </span>
+                  </div>
+                </template>
+                <template v-else-if="song.emotion > 0.9">
+                  <div class="d-flex align-items-center avatar-container">
+                    <img src="~@/assets/svg/avatars/emotions/4.svg" alt="Amazing">
+                    <span class="text-14">
+                      Geweldig
+                    </span>
+                  </div>
+                </template>
               </div>
             </div>
             <div class="col col__fourth">
@@ -112,6 +164,8 @@
 
 <script>
 import { mapState } from 'vuex'
+import db from '@/js/firebase/firebase_init.js'
+import { collection, getDocs } from 'firebase/firestore/lite'
 import playSong from '@/spotify/playSong'
 import OrangeButton from '@/components/buttons/OrangeButton'
 
@@ -125,7 +179,9 @@ export default {
       buttonTextSongs: 'Meer nummers inladen',
       buttonTextArtists: 'Meer artiesten inladen',
       maxSongs: 5,
-      maxArtists: 5
+      maxArtists: 5,
+      songs: null,
+      emotions: null
     }
   },
   computed: {
@@ -141,6 +197,9 @@ export default {
         activeButton.classList.add('playing')
       }
     }
+  },
+  mounted () {
+    this.getEmotions()
   },
   components: {
     OrangeButton
@@ -187,6 +246,31 @@ export default {
     },
     loadMoreArtists () {
       this.maxArtists = this.searched.artists.length
+    },
+    async getEmotions () {
+      const querySnapshot = await getDocs(collection(db, 'emotions'))
+      const data = []
+      querySnapshot.forEach((doc) => {
+        data.push(doc.data())
+      })
+      this.emotions = data
+      
+      this.compareEmotions()
+    },
+    compareEmotions () {
+      this.searched.songs.forEach(song => {
+        this.emotions.forEach(emotion => {
+          if (song.found) return
+          
+          if (song.id === emotion.Track_ID) {
+            song.emotion = Math.round(emotion.RNN * 10) / 10
+            song.found = true
+          } else {
+            song.emotion = 'none'
+          }
+        })
+      })
+      this.songs = this.searched.songs
     }
   }
 }
@@ -215,6 +299,10 @@ section:last-of-type {
     padding: rem(6px) rem(16px) rem(4px) 0;
   }
 
+  .row-left {
+    padding-right: rem(32px);
+  }
+
   .col {
     padding-right: rem(32px);
 
@@ -223,11 +311,27 @@ section:last-of-type {
     }
 
     &__second {
-      width: rem(340px);
+      width: rem(280px);
+    }
+
+    &__third {
+      padding-right: rem(64px);
+
+      &__top {
+        padding-right: rem(48px);
+      }
     }
 
     &__fourth {
       padding-right: 0;
+    }
+  }
+
+  .avatar-container {
+    img {
+      padding-right: rem(12px);
+      width: 100%;
+      max-width: rem(40px);
     }
   }
 
