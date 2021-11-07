@@ -30,10 +30,7 @@ import PlaylistGrid from '@/components/PlaylistGrid.vue'
 import SearchResults from '@/components/SearchResults.vue'
 
 export default {
-  name: 'Playlist',
-  computed: {
-    ...mapState(['searchActive'])
-  },
+  name: 'Playlist',  
   props: {
     playlistId: String,
     title: String,
@@ -46,6 +43,9 @@ export default {
     SearchBar,
     PlaylistGrid,
     SearchResults
+  },
+  computed: {
+    ...mapState(['searchActive'])
   }
 }
 </script>

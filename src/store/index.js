@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     accessToken: null,
+    tokenDate: null,
     headers: null,
     player: null,
     playerInstance: null,
@@ -26,6 +27,9 @@ export default new Vuex.Store({
   mutations: {
     setAccessToken: (state, payload) => {
       state.accessToken = payload
+    },
+    setTokenDate: (state, payload) => {
+      state.tokenDate = payload
     },
     setHeaders: (state, payload) => {
       state.headers = payload
@@ -75,6 +79,7 @@ export default new Vuex.Store({
   modules: {},
   getters: {
     getAccessToken: state => state.accessToken,
+    getTokenDate: state => state.tokenDate,
     getHeaders: state => state.headers,
     getPlayerInstance: state => state.playerInstance,
     getPlayer: state => state.player,

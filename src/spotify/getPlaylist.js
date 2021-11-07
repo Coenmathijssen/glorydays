@@ -53,8 +53,7 @@ const getPlaylist = {
                 artists: song.track.artists.map(artist => {
                   return {
                     id: artist.id,
-                    name: artist.name,
-                    url: artist.url
+                    name: artist.name
                   }
                 }),
                 duration: song.track.duration_ms

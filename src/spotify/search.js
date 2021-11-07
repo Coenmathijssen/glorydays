@@ -22,8 +22,7 @@ const search = {
                 artists: song.artists.map(artist => {
                   return {
                     id: artist.id,
-                    name: artist.name,
-                    url: artist.url,
+                    name: artist.name
                   }
                 }),
                 url: song.external_urls.spotify,

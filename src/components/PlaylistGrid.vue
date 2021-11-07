@@ -60,7 +60,7 @@
               </span>
             </div>
           </template>
-          <template v-else-if="song.emotion >= 0.3 && song.emotion <= 0.5">
+          <template v-else-if="song.emotion >= 0.3 && song.emotion <= 0.4">
             <div class="d-flex align-items-center avatar-container">
               <img src="~@/assets/svg/avatars/emotions/1.svg" alt="Bad">
               <span class="text-14">
@@ -68,7 +68,7 @@
               </span>
             </div>
           </template>
-          <template v-else-if="song.emotion >= 0.6 && song.emotion <= 0.7">
+          <template v-else-if="song.emotion >= 0.5 && song.emotion <= 0.6">
             <div class="d-flex align-items-center avatar-container">
               <img src="~@/assets/svg/avatars/emotions/2.svg" alt="Neutral">
               <span class="text-14">
@@ -76,7 +76,7 @@
               </span>
             </div>
           </template>
-          <template v-else-if="song.emotion >= 0.8 && song.emotion <= 0.9">
+          <template v-else-if="song.emotion >= 0.7 && song.emotion <= 0.8">
             <div class="d-flex align-items-center avatar-container">
               <img src="~@/assets/svg/avatars/emotions/3.svg" alt="Happy">
               <span class="text-14">
@@ -84,7 +84,7 @@
               </span>
             </div>
           </template>
-          <template v-else-if="song.emotion > 0.9">
+          <template v-else-if="song.emotion >= 0.9">
             <div class="d-flex align-items-center avatar-container">
               <img src="~@/assets/svg/avatars/emotions/4.svg" alt="Amazing">
               <span class="text-14">
@@ -251,6 +251,7 @@ export default {
     
     &__fourth {
       width: rem(120px);
+      padding-right: rem(48px);
     }
 
     &__fifth {
@@ -261,6 +262,8 @@ export default {
   .avatar-container {
     img {
       padding-right: rem(12px);
+      width: 100%;
+      max-width: rem(40px);
     }
   }
 }

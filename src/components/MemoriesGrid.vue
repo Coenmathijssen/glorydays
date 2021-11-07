@@ -1,30 +1,56 @@
 <template>
   <div class="memories-grid">
     <div class="container">
-      <div v-if="memories" class="d-flex flex-wrap">
-        <div v-for="(memory, index) in memories" :key="`row-${index}`" class="memory">
-          <span class="text-12">
-            Door: zus Tineke
-          </span>
-          <template v-if="index % 2 == 0 || index % 5== 0">
-            <div class="d-flex align-items-center avatar-container">
-              <img src="~@/assets/svg/avatars/male_white/happy.svg" alt="Happy">
-              <span class="text-14">
-                Gelukkig
-              </span>
+      <div v-if="data" class="d-flex flex-wrap">
+        <div v-for="(memory, index) in data" :key="`row-${index}`" class="memory">
+          <router-link :to="{ name: 'Memory', params: { memory: memory }}" >
+            <span class="text-12">
+              Door: zus Tineke
+            </span>
+            <template v-if="memory.song.emotion >= 0 && memory.song.emotion <= 0.2">
+              <div class="d-flex align-items-center avatar-container">
+                <img src="~@/assets/svg/avatars/emotions/0.svg" alt="Horrible">
+                <span class="text-14">
+                  Veschrikkelijk
+                </span>
+              </div>
+            </template>
+            <template v-else-if="memory.song.emotion >= 0.3 && memory.song.emotion <= 0.4">
+              <div class="d-flex align-items-center avatar-container">
+                <img src="~@/assets/svg/avatars/emotions/1.svg" alt="Bad">
+                <span class="text-14">
+                  Matig
+                </span>
+              </div>
+            </template>
+            <template v-else-if="memory.song.emotion >= 0.5 && memory.song.emotion <= 0.6">
+              <div class="d-flex align-items-center avatar-container">
+                <img src="~@/assets/svg/avatars/emotions/2.svg" alt="Neutral">
+                <span class="text-14">
+                  Neutraal
+                </span>
+              </div>
+            </template>
+            <template v-else-if="memory.song.emotion >= 0.7 && memory.song.emotion <= 0.8">
+              <div class="d-flex align-items-center avatar-container">
+                <img src="~@/assets/svg/avatars/emotions/3.svg" alt="Happy">
+                <span class="text-14">
+                  Blij
+                </span>
+              </div>
+            </template>
+            <template v-else-if="memory.song.emotion >= 0.9">
+              <div class="d-flex align-items-center avatar-container">
+                <img src="~@/assets/svg/avatars/emotions/4.svg" alt="Amazing">
+                <span class="text-14">
+                  Geweldig
+                </span>
+              </div>
+            </template>
+            <div class="text-18 bold">
+              {{ memory.title }}
             </div>
-          </template>
-          <template v-else-if="index % 3 == 0">
-             <div class="d-flex align-items-center avatar-container">
-              <img src="~@/assets/svg/avatars/male_white/bored.svg" alt="Happy">
-              <span class="text-14">
-                Verveeld
-              </span>
-            </div>
-          </template>
-          <div class="text-18 bold">
-            {{ memory.title }}
-          </div>
+          </router-link>
         </div>
       </div>
     </div>
@@ -41,12 +67,15 @@ export default {
   computed: {
     ...mapState(['memories'])
   },
+  data () {
+    return {
+      data: null
+    }
+  },
   mounted () {
-    // if (!this.memories) {
-
-    // }
     this.getMemories().then(memories => {
       this.$store.commit('setMemories', memories)
+      this.getEmotions()
     })
   },
   methods: {
@@ -55,8 +84,34 @@ export default {
       const data = []
       querySnapshot.forEach((doc) => {
         data.push(doc.data())
-      });
+      })
       return data
+    },
+    async getEmotions () {
+      const querySnapshot = await getDocs(collection(db, 'emotions'))
+      const data = []
+      querySnapshot.forEach((doc) => {
+        data.push(doc.data())
+      })
+      this.emotions = data
+      
+      this.compareEmotions()
+    },
+    compareEmotions () {
+      this.memories.forEach(memory => {
+        this.emotions.forEach(emotion => {
+          if (memory.song.found) return
+          
+          if (memory.song.id === emotion.Track_ID) {
+            memory.song.emotion = Math.round(emotion.RNN * 10) / 10
+            memory.song.found = true
+          } else {
+            memory.song.emotion = 'none'
+          }
+        })
+      })
+      console.log(this.memories)
+      this.data = this.memories
     }
   }
 }
@@ -97,6 +152,10 @@ export default {
       position: absolute;
       top: rem(32px);
       left: rem(28px);
+
+      img {
+        max-width: rem(40px);
+      }
     }
 
     .text-14 {

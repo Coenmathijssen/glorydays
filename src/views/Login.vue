@@ -12,11 +12,11 @@
 
 <script>
 export default {
-  name: 'LoginSpotify',
+  name: 'Login',
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '~@/scss/variables';
 @import '~@/scss/base/mixins/rem';
 
@@ -49,5 +49,10 @@ export default {
     font-weight: 900;
     letter-spacing: 1px;
   }
+
+  ~ nav {
+    display: none !important;
+  }
 }
+
 </style>

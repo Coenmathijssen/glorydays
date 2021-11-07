@@ -5,7 +5,7 @@
         <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path fill="#FFF" fill-rule="nonzero" d="m21.28 23.64 2.36-2.36L14.36 12l9.28-9.28L21.28.36 12 9.64 2.72.36.36 2.72 9.64 12 .36 21.28l2.36 2.36L12 14.36z"/></svg>
       </button>
       <div class="text-20 bold tt-gt">
-        Herinnering bij nummer
+        Deze herinnering is gekoppeld aan
       </div>
       <div v-if="currentPlayingSong" class="song d-flex align-items-center">
         <svg id="Bold" enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg"><path d="m12 24c6.624 0 12-5.376 12-12s-5.376-12-12-12-12 5.376-12 12 5.376 12 12 12zm4.872-6.344v.001c-.807 0-3.356-2.828-10.52-1.36-.189.049-.436.126-.576.126-.915 0-1.09-1.369-.106-1.578 3.963-.875 8.013-.798 11.467 1.268.824.526.474 1.543-.265 1.543zm1.303-3.173c-.113-.03-.08.069-.597-.203-3.025-1.79-7.533-2.512-11.545-1.423-.232.063-.358.126-.576.126-1.071 0-1.355-1.611-.188-1.94 4.716-1.325 9.775-.552 13.297 1.543.392.232.547.533.547.953-.005.522-.411.944-.938.944zm-13.627-7.485c4.523-1.324 11.368-.906 15.624 1.578 1.091.629.662 2.22-.498 2.22l-.001-.001c-.252 0-.407-.063-.625-.189-3.443-2.056-9.604-2.549-13.59-1.436-.175.048-.393.125-.625.125-.639 0-1.127-.499-1.127-1.142 0-.657.407-1.029.842-1.155z"/></svg>
@@ -51,6 +51,14 @@
             </button>
           </div>
         </template>
+        <template v-if="input.type === 'audio'">
+          <div class="bit bit__audio">
+            <Audio @getAudio="saveAudio" />
+            <button class="d-flex-column align-items-center justify-content-between delete" @click="removeBit(index)">
+              <svg width="24" height="30" xmlns="http://www.w3.org/2000/svg"><path d="M23.64 5V1.64h-5.76L16.16 0H7.88L6.16 1.64H.36V5h23.28zm-5 25c.907 0 1.693-.333 2.36-1 .667-.667 1-1.453 1-2.36v-20H2v20c0 .907.333 1.693 1 2.36.667.667 1.453 1 2.36 1h13.28z" fill="#FFF" fill-rule="nonzero"/></svg>
+            </button>
+          </div>
+        </template>
       </div>
       <div class="buttons d-flex-between">
         <button class="d-flex-column align-items-center justify-content-between" @click="addText()">
@@ -66,7 +74,7 @@
           </span>
           <input type="file" accept="image/*" @change="uploadImage">
         </button>
-        <button class="d-flex-column align-items-center justify-content-between">
+        <button class="d-flex-column align-items-center justify-content-between" @click="addAudio()">
           <svg width="30" height="41" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M18.1 24.85c-.967.567-2 .85-3.1.85s-2.133-.283-3.1-.85a6.34 6.34 0 0 1-2.3-2.3 6.03 6.03 0 0 1-.85-3.1V6.95c0-1.1.283-2.133.85-3.1a6.34 6.34 0 0 1 2.3-2.3c.967-.566 2-.85 3.1-.85s2.133.284 3.1.85a6.341 6.341 0 0 1 2.3 2.3c.567.967.85 2 .85 3.1v12.5a6.03 6.03 0 0 1-.85 3.1 6.341 6.341 0 0 1-2.3 2.3Zm-1.05 8.55v6.85h-4.1V33.4a14.24 14.24 0 0 1-6.275-2.425C4.758 29.658 3.25 28.017 2.15 26.05a13.52 13.52 0 0 1-1.7-6.6h3.5c0 2.034.533 3.867 1.6 5.5 1 1.567 2.342 2.8 4.025 3.7C11.258 29.55 13.067 30 15 30c1.933 0 3.742-.45 5.425-1.35 1.683-.9 3.025-2.133 4.025-3.7 1.067-1.633 1.6-3.466 1.6-5.5h3.5a13.52 13.52 0 0 1-1.7 6.6c-1.1 1.967-2.608 3.608-4.525 4.925A14.241 14.241 0 0 1 17.05 33.4Z" fill="#fff"/></svg>
           <span class="text-16 bold">
             Audio toevoegen
@@ -89,6 +97,7 @@ import { collection, addDoc } from 'firebase/firestore/lite'
 import { mapState } from 'vuex'
 import Swiper from 'swiper'
 import 'swiper/swiper-bundle.css'
+import Audio from '@/components/Audio.vue'
 
 export default {
   name: 'AddMemory',
@@ -98,9 +107,13 @@ export default {
       memory: {
         title: null,
         coverPhoto: null,
-        bits: []
+        bits: [],
+        song: null
       }
     }
+  },
+  components: {
+    Audio
   },
   computed: {
     ...mapState(['isPlaying', 'currentPlayingSong', 'addMemory'])
@@ -128,7 +141,6 @@ export default {
         value: '',
         type: 'text'
       })
-      
     },
     removeBit(index) {
       this.memory.bits.splice(index, 1)
@@ -141,8 +153,6 @@ export default {
       }
 
       const storage = getStorage()
-
-      // Create the file metadata
       const metadata = {
         contentType: 'image/jpeg'
       };
@@ -160,6 +170,7 @@ export default {
         }, 
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            console.log(downloadURL)
             this.memory.bits.push({ 
               url: downloadURL,
               type: 'image'
@@ -168,14 +179,71 @@ export default {
         }
       )
     },
-     saveMemory () {
+    addAudio () {
+      this.memory.bits.push({ 
+        url: '',
+        type: 'audio'
+      })
+    },
+    saveAudio (blob) {
+      const storage = getStorage()
+      const metadata = {
+        contentType: 'blob'
+      };
+
+      const storageRef = ref(storage, 'audio/' + this.generateId(20))
+      const uploadTask = uploadBytesResumable(storageRef, blob, metadata)
+
+      uploadTask.on('state_changed',
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          console.log('Upload is ' + progress + '% done')
+        }, 
+        (error) => {
+          console.log('error uploading: ', error)
+        }, 
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            const audioBits = this.memory.bits.filter(bit => bit.type === 'audio')
+            this.memory.bits[audioBits.length - 1].url = downloadURL
+          })
+        }
+      )
+    },
+    generateId (length) {
+      let result = ''
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+      for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length))
+      }
+      return result
+    },
+    saveMemory () {
+      // Add song
+      console.log(this.currentPlayingSong.artists)
+      if (this.currentPlayingSong) {
+        this.memory.song = {
+          id: this.currentPlayingSong.id,
+          name: this.currentPlayingSong.name,
+          artists: this.arrayToObject(this.currentPlayingSong.artists),
+          url: this.currentPlayingSong.url
+        }
+      }
+
+      // Save
       addDoc(collection(db, 'memories'), this.memory).then(() => {
-        console.log('memory saved')
+        this.memory.title = ''
         this.close()
       })
       .catch(err => {
         console.log('error saving memory: ', err)
       })
+    },
+    arrayToObject (array) {
+      var rv = {}
+      for (var i = 0; i < array.length; ++i)
+        rv[i] = array[i]
+      return rv
     }
   }
 }

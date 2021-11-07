@@ -23,7 +23,7 @@ import Playlists from '@/components/Playlists.vue'
 import SearchResults from '@/components/SearchResults.vue'
 
 export default {
-  name: 'Home',
+  name: 'Music',
   computed: {
     ...mapState(['searchActive'])
   },

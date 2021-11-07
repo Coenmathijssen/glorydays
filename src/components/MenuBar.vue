@@ -57,12 +57,12 @@ nav {
   a {
     padding: rem(28px) rem(8px);
 
-    svg path {
+    svg * {
       transition: all .2s ease-in-out;
     }
 
     &.router-link-exact-active {
-      svg path {
+      svg *, svg circle {
         fill: $orange;
       }
     }

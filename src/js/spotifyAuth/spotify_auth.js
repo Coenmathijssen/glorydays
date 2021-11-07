@@ -5,6 +5,7 @@ import store from '@/store/index'
 async function getAuthToken (db) {
   const docRef = doc(db, 'users', 'spotify', 'spotifyAuth', 'authTokens')
   const docSnap = await getDoc(docRef)
+  store.commit('setTokenDate', docSnap.data().dateRetrieved)
   return docSnap.data().accessToken
 }
 

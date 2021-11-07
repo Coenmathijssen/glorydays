@@ -10,7 +10,7 @@ Vue.config.productionTip = false
 const VueInstance = new Vue({
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
 }).$mount('#app')
 
 Vue.use(VueRouter)

@@ -1,9 +1,5 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link>
-      <router-link to="/about">About</router-link>
-    </div> -->
     <router-view/>
     <PlayBar/>
     <AddMemory/>
@@ -26,10 +22,13 @@ export default {
     MenuBar
   },
   mounted() {
-    if (this.$store.getters.getAccessToken) return
-
-    // Set access token
+    // Get access token. If older than 1 hour, redirect to login
     spotifyAuth.then(() => {
+      const currentTimeInSeconds = new Date().getTime() / 1000
+      if (currentTimeInSeconds - this.$store.getters.getTokenDate.seconds > 3600) {
+        this.$router.push('/login')
+      }
+
       if (!this.$store.getters.getDeviceId) {
         this.playbackInit()
       }
@@ -45,7 +44,6 @@ export default {
       // Called when the Spotify Web Playback SDK is ready to use
       window.onSpotifyWebPlaybackSDKReady = () => {  
         // Define the Spotify Connect device, getOAuthToken has an actual token
-        // hardcoded for the sake of simplicity
         const player = new window.Spotify.Player({
           name: 'Glory Days',
           getOAuthToken: (callback) => {
@@ -82,17 +80,4 @@ export default {
   background-color: $main-bg;
   font-family: 'Avenir';
 }
-
-// #nav {
-//   padding: 30px;
-// }
-
-// #nav a {
-//   font-weight: bold;
-//   color: #2c3e50;
-// }
-
-// #nav a.router-link-exact-active {
-//   color: #42b983;
-// }
 </style>
