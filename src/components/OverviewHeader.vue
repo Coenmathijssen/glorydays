@@ -12,7 +12,7 @@
                 <img src="~@/assets/svg/moon.svg" alt="Moon">
               </div>
               <template v-if="daytime === 'evening'">
-                Goedenavond
+                Goedemorgen
               </template>
               {{name}},
             </h1>

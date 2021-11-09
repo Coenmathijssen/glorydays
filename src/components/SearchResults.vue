@@ -54,7 +54,7 @@
                 </span>
               </div>
               <div class="col col__fourth">
-                <template v-if="song.emotion === 'none'">
+                <template v-if="song.emotion === 'none' || !song.emotion">
                   <span class="text-14 lighter">
                     Niet gemeten
                   </span>
